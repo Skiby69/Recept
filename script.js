@@ -106,10 +106,11 @@ const selectedIngredients = new Set();
 const resultsContainer = document.getElementById("results");
 function keresReceptek(){
     selectedIngredients.clear();
-    const selectedIngredient = document.querySelector('input[name="ingred"]:checked')?.value;
-    if (selectedIngredient) {
-        selectedIngredients.add(selectedIngredient);
-    }
+    const checkedInputs = document.querySelectorAll('input[name="ingred"]:checked');
+
+    checkedInputs.forEach(input => {
+    selectedIngredients.add(input.value);
+    });
     if (selectedIngredients.size === 0) {
         resultsContainer.innerHTML = "<p>Kérem, válasszon legalább egy hozzávalót!</p>";
         return;
