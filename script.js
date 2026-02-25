@@ -96,7 +96,7 @@ function loadIngredients() {
         ingredientDiv.innerHTML += `
             <label>
                 <input type="checkbox" name="ingred" value="${ing}">
-                ${ing}
+                ${String(ing).charAt(0).toUpperCase() + String(ing).slice(1)}
             </label>
         `;
     });
@@ -105,14 +105,23 @@ function loadIngredients() {
 const selectedIngredients = new Set();
 const resultsContainer = document.getElementById("results");
 function keresReceptek(){
+    selectedIngredients.clear();
     const selectedIngredient = document.querySelector('input[name="ingred"]:checked')?.value;
     if (selectedIngredient) {
         selectedIngredients.add(selectedIngredient);
+    }
+    if (selectedIngredients.size === 0) {
+        resultsContainer.innerHTML = "<p>Kérem, válasszon legalább egy hozzávalót!</p>";
+        return;
     }
     resultsContainer.innerHTML = "";
     const filteredRecipes = receptek.filter(recept => 
         [...selectedIngredients].every(ing => recept.hozzavalok.includes(ing))
     );
+    if (filteredRecipes.length === 0) {
+        resultsContainer.innerHTML = "<p>Nincs találat a kiválasztott hozzávalókkal.</p>";
+        return;
+    }
     filteredRecipes.forEach(recept => {
         resultsContainer.innerHTML += 
         `
