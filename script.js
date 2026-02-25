@@ -84,3 +84,21 @@ const receptek = [
         hozzavalok: ["tojás", "sajt", "só"]
     }
 ];
+
+const selectedIngredients = new Set();
+function keresReceptek(){
+    const selectedIngredient = document.querySelector('input[name="ingred"]:checked')?.value;
+    if (selectedIngredient) {
+        selectedIngredients.add(selectedIngredient);
+    }
+    const resultsContainer = document.getElementById("results");
+    resultsContainer.innerHTML = "";
+    const filteredRecipes = receptek.filter(recept => 
+        [...selectedIngredients].every(ing => recept.hozzavalok.includes(ing))
+    );
+    filteredRecipes.forEach(recept => {
+        const recipeElement = document.createElement("div");
+        recipeElement.textContent = recept.nev;
+        resultsContainer.appendChild(recipeElement);
+    });
+}
