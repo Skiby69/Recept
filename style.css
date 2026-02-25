@@ -16,6 +16,7 @@ body{
 }
 
 button{
+    margin-top: 10px;
     background-color: #704d0c;
     color: white;
     padding: 10px 20px;
@@ -30,4 +31,39 @@ h1{
 }
 h2{
     color: #a06409;
+}
+
+#ingredient-list{
+    text-align: left;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    justify-items: center;
+}
+
+label{
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    width: 200px;
+    text-align: center;
+}
+
+#results{
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+}
+.recipe{
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    width: 200px;
+    text-align: center;
 }
