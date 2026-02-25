@@ -85,20 +85,43 @@ const receptek = [
     }
 ];
 
+const ingredientDiv = document.getElementById("ingredient-list");
+function loadIngredients() {
+    ingredientDiv.innerHTML = "";
+    const allIngredients = new Set();
+    receptek.forEach(recept => {
+        recept.hozzavalok.forEach(ing => allIngredients.add(ing));
+    });
+    allIngredients.forEach(ing => {
+        ingredientDiv.innerHTML += `
+            <label>
+                <input type="checkbox" name="ingred" value="${ing}">
+                ${ing}
+            </label>
+        `;
+    });
+}
+
 const selectedIngredients = new Set();
+const resultsContainer = document.getElementById("results");
 function keresReceptek(){
     const selectedIngredient = document.querySelector('input[name="ingred"]:checked')?.value;
     if (selectedIngredient) {
         selectedIngredients.add(selectedIngredient);
     }
-    const resultsContainer = document.getElementById("results");
     resultsContainer.innerHTML = "";
     const filteredRecipes = receptek.filter(recept => 
         [...selectedIngredients].every(ing => recept.hozzavalok.includes(ing))
     );
     filteredRecipes.forEach(recept => {
-        const recipeElement = document.createElement("div");
-        recipeElement.textContent = recept.nev;
-        resultsContainer.appendChild(recipeElement);
+        resultsContainer.innerHTML += 
+        `
+            <div class="recipe">
+                <h3>${recept.nev}</h3>
+                <p>Hozzávalók: ${recept.hozzavalok.join(", ")}</p>
+            </div>
+        `;
     });
 }
+
+loadIngredients();
